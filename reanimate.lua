@@ -1,20 +1,3 @@
--- box reanimate 
--- fully open source
-
---[[
-
-^-^-^
-put at start of code, these variables are needed
-^-^-^
-
-local RejoinButton = false -- Makes the reset button in the menu rejoin you.
-local PermanentDeath = true  -- Permanent death for moving the head and using fling.
-local Fling = true -- Turns your root part into a block that can send people to the orbit.
-local NetworkOwnershipBypass = 45 -- The higher the number, the more your character will jitter but it will be less prone to limbs falling. Set to 0 if you don't want it. Recommended number is 30.
-local Noclip = true -- Makes your character unflingable and pass through walls.
-local ReanimatePlatform = true -- Teleports your character to a platform while reanimating. Prevents people from taking NetworkOwnership of your limbs.
-
-]]--
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
