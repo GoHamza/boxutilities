@@ -39,7 +39,7 @@ TextLabel:TweenPosition(UDim2.new(-0.002, 0, 0, 0),"Out","Sine",0.5)
 end)()
 print("BOX REANIMATION BY GOHAMZA. TO CONTACT THE OWNER, MESSAGE GoHamza#6766.")
 local BOXstart = tick()
-if PermanentDeath == true then
+if _G.PermanentDeath == true then
 	print("Reanimating with permanent death...")
 else
 	print("Reanimating without permanent death...")
@@ -49,7 +49,7 @@ else
 	end
 end
 local reanimationstart = tick()
-if ReanimatePlatform == true then
+if _G.ReanimatePlatform == true then
 	print("Created platform.")
 	baseplatium = Instance.new("Part", workspace)
 	baseplatium.Name = "FO10 is a skid"
@@ -71,7 +71,7 @@ if ReanimatePlatform == true then
 	game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
 end
 
-if PermanentDeath == true then
+if _G.PermanentDeath == true then
 	Bypass = "death"
 else
 	Bypass = "limbs"
@@ -494,7 +494,7 @@ donesound.PlayOnRemove = true
 donesound:Destroy()
 NetworkOwnershipBypass = tonumber(NetworkOwnershipBypass)
 local as = game:GetService("Players").LocalPlayer.Character
-if NetworkOwnershipBypass > 0 then
+if _G.NetworkOwnershipBypass > 0 then
 	print("Setting up NetworkOwnership bypass...")
 	local val = tonumber(NetworkOwnershipBypass)
 	for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
@@ -509,7 +509,7 @@ if NetworkOwnershipBypass > 0 then
 
 	print("NetworkOwnership bypass successfully set up!")
 end
-if ReanimatePlatform == true then
+if _G.ReanimatePlatform == true then
 	wait(0.5)
 	spawn(function()
 		for i = 10, 0, -0.5 do
@@ -523,7 +523,7 @@ if ReanimatePlatform == true then
 end
 local reanimationend = tick() - reanimationstart
 print("Reanimated! Just took "..reanimationend.." seconds.")
-if Fling == true then
+if _G.Fling == true then
 	local chr = game:GetService("Players").LocalPlayer.Character
 	print("Setting up fling...")
 	workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
@@ -536,7 +536,7 @@ if Fling == true then
 	angularvelocity.AngularVelocity = Vector3.new(0,math.huge,0)
 	print("Fling successfully set up!")
 end
-if RejoinButton == true then
+if _G.RejoinButton == true then
 	local Players = game:GetService("Players")
 	print("Setting up rejoin button...")
 	coroutine.wrap(function()
@@ -558,7 +558,7 @@ if RejoinButton == true then
 	end)()
 	print("Successfully set up rejoin button!")
 end
-if Noclip == true then
+if _G.Noclip == true then
 	local Character = game:GetService("Players").LocalPlayer.Character
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
