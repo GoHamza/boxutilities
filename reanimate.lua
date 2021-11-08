@@ -581,10 +581,10 @@ reanimationstart = nil
 BOXstart = nil
 print("All done, took just "..BOXend.." seconds!")
 BOXend = nil
-spawn(function()
+coroutine.wrap(function()
 wait(1)
 TextLabel:TweenPosition(UDim2.new(-1.067, 0, 0, 0),"Out","Sine",0.5)
 wait(0.5)
 thebox:TweenPosition(UDim2.new(0.006, 0, 1.2, 0),"Out","Sine",3)
 game:GetService("Debris"):AddItem(ScreenGui, 3.2)
-end)
+end)()
