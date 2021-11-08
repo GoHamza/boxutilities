@@ -78,7 +78,7 @@ else
 	Bypass = "limbs"
 end
 ded = false
-if PermanentDeath == true then
+if _G.PermanentDeath == true then
 	local startsound = Instance.new("Sound", game:GetService("ReplicatedStorage"))
 	startsound.SoundId = "rbxassetid://4462044869"
 	startsound.Parent = workspace
@@ -493,11 +493,11 @@ donesound.Volume = 0.7
 donesound.Pitch = 1.6
 donesound.PlayOnRemove = true
 donesound:Destroy()
-NetworkOwnershipBypass = tonumber(NetworkOwnershipBypass)
+_G.NetworkOwnershipBypass = tonumber(_G.NetworkOwnershipBypass)
 local as = game:GetService("Players").LocalPlayer.Character
 if _G.NetworkOwnershipBypass > 0 then
 	print("Setting up NetworkOwnership bypass...")
-	local val = tonumber(NetworkOwnershipBypass)
+	local val = tonumber(_G.NetworkOwnershipBypass)
 	for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
 		if v:IsA("BasePart") and v.Name ~="HumanoidRootPart" then
 			BOXNETLESS = game:GetService("RunService").Heartbeat:connect(function()
