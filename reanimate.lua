@@ -7,6 +7,7 @@ _G.Noclip = true -- Makes your character unflingable and pass through walls.
 _G.ReanimatePlatform = true -- Teleports your character to a platform while reanimating. Prevents people from taking NetworkOwnership of your limbs.
 loadstring(game:HttpGet(string.reverse("aul.etaminaer/niam/seitilituxob/azmaHoG/moc.tnetnocresubuhtig.war//:sptth")))()
 ]]
+-- Don't be surprised if it's similar to Mizt's reanimation. It's a fork of it. Completely open-source, I don't care if you skid it or make a fork.
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
