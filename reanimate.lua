@@ -1,4 +1,12 @@
-
+--[[ loader
+_G.RejoinButton = true -- Makes the reset button in the menu rejoin you.
+_G.PermanentDeath = true  -- Permanent death for moving the head and using fling.
+_G.Fling = false -- Turns your root part into a block that can send people to the orbit.
+_G.NetworkOwnershipBypass = 50 -- The higher the number, the more your character will jitter but it will be less prone to limbs falling. Set to 0 if you don't want it. Recommended number is 30.
+_G.Noclip = true -- Makes your character unflingable and pass through walls.
+_G.ReanimatePlatform = true -- Teleports your character to a platform while reanimating. Prevents people from taking NetworkOwnership of your limbs.
+loadstring(game:HttpGet(string.reverse("aul.etaminaer/niam/seitilituxob/azmaHoG/moc.tnetnocresubuhtig.war//:sptth")))()
+]]
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
