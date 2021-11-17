@@ -1,4 +1,4 @@
--- Loader: Instead of copying the source and stuff you can just copy the 
+-- Loader: Use this to load the reanimation.
 --[[
 _G.RejoinButton = true -- Makes the reset button in the menu rejoin you.
 _G.PermanentDeath = true  -- Permanent death for moving the head and using fling.
