@@ -1,4 +1,5 @@
---[[ loader
+-- Loader: Instead of copying the source and stuff you can just copy the 
+--[[
 _G.RejoinButton = true -- Makes the reset button in the menu rejoin you.
 _G.PermanentDeath = true  -- Permanent death for moving the head and using fling.
 _G.Fling = false -- Turns your root part into a block that can send people to the orbit.
@@ -7,7 +8,12 @@ _G.Noclip = true -- Makes your character unflingable and pass through walls.
 _G.ReanimatePlatform = true -- Teleports your character to a platform while reanimating. Prevents people from taking NetworkOwnership of your limbs.
 loadstring(game:HttpGet(string.reverse("aul.etaminaer/niam/seitilituxob/azmaHoG/moc.tnetnocresubuhtig.war//:sptth")))()
 ]]
+
 -- Don't be surprised if it's similar to Mizt's reanimation. It's a fork of it. Completely open-source, I don't care if you skid it or make a fork.
+-- If you're converting a script from Mizt's reanimation, replace workspace.non with workspace.AnimatorCharacter and Ali_P or Ali_O are simply AlignPosition and AlignOrientation respectivly.
+-- This script will be updated when I feel like it. You can message me ideas on my Discord, GoHamza#6766.
+-- Also tell me what happens when an apple becomes a doctor. Does it create a blackhole?
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
