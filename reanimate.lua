@@ -137,9 +137,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	workspace.Camera.CameraSubject = CloneChar.Humanoid
 	CloneChar.Name = "AnimatorCharacter" 
 	CloneChar.Humanoid.DisplayDistanceType = "None"
-	if CloneChar.Head:FindFirstChild("face") then CloneChar.Head:FindFirstChild("face"):Destroy() end
-	if workspace[game:GetService("Players").LocalPlayer.Name].Head:FindFirstChild("face") then workspace[game:GetService("Players").LocalPlayer.Name].Head:FindFirstChild("face").Parent = CloneChar.Head end
-
+	
 	local DeadChar = workspace[game:GetService("Players").LocalPlayer.Name]
 	DeadChar.HumanoidRootPart:Destroy()
 
@@ -310,9 +308,7 @@ elseif Bypass == "death" then --------------------------------------------------
 	workspace.Camera.CameraSubject = CloneChar.Humanoid 
 	CloneChar.Name = "AnimatorCharacter" 
 	CloneChar.Humanoid.DisplayDistanceType = "None"
-	if CloneChar.Head:FindFirstChild("face") then CloneChar.Head:FindFirstChild("face"):Destroy() end
-	if workspace[game:GetService("Players").LocalPlayer.Name].Head:FindFirstChild("face") then workspace[game:GetService("Players").LocalPlayer.Name].Head:FindFirstChild("face").Parent = CloneChar.Head end
-
+	
 	FalseChar:Destroy()
 
 	local DeadChar = workspace[game:GetService("Players").LocalPlayer.Name]
