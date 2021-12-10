@@ -539,7 +539,7 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	end)
     local goal = {}
 	goal.CFrame = previouscf
-	local tweenInfo = TweenInfo.new(0.5)
+	local tweenInfo = TweenInfo.new(1.2)
 	local tween = game:GetService("TweenService"):Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
 	--workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
 end
@@ -551,7 +551,7 @@ if _G.Fling == true then
 	    print("Setting up fling...")
 	    workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
 	    chr.HumanoidRootPart.Transparency = 0.7
-	    chr.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+	    chr.HumanoidRootPart.BrickColor = BrickColor.new("Bright green")
 	    chr.HumanoidRootPart.CanCollide = false
 	    local att = Instance.new("Attachment", chr.Torso)
     	att.Name = "Fling Attachment"
