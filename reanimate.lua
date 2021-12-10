@@ -65,11 +65,11 @@ else
 	end
 end
 local reanimationstart = tick()
-if _G.ReanimatePlatform == true then
+if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	print("Created platform.")
 	baseplatium = Instance.new("Part", workspace)
 	baseplatium.Name = "FO10 is a skid"
-	baseplatium.Position = Vector3.new(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.X,300,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Z)
+	baseplatium.Position = Vector3.new(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.X,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Y + 300,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Z)
 	baseplatium.CanCollide = true
 	baseplatium.Anchored = true
 	baseplatium.Transparency = 0.5
@@ -84,7 +84,10 @@ if _G.ReanimatePlatform == true then
 			baseplatium.Orientation = Vector3.new(0,i*18,0)
 		end
 	end)()
-	game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
+    local goal = {}
+	goal.CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
+	local tweenInfo = TweenInfo.new(0.5)
+	local tween = TweenService:Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
 end
 
 if _G.PermanentDeath == true then
@@ -101,7 +104,7 @@ if _G.PermanentDeath == true then
 	startsound.PlayOnRemove = true
 	startsound:Destroy()
 end
-function thewhat(Part0,Part1,Position,Angle)
+function align(Part0,Part1,Position,Angle)
 	local AlignPos = Instance.new('AlignPosition', Part1);
 	AlignPos.ApplyAtCenterOfMass = true;
 	AlignPos.MaxForce = 1000000000;
@@ -252,12 +255,12 @@ if Bypass == "limbs" then ------------------------------------------------------
 		end
 	end)()
 
-	thewhat(DeadChar["Head"],CloneChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Torso"],CloneChar["Torso"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Left Arm"],CloneChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Right Arm"],CloneChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Left Leg"],CloneChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Right Leg"],CloneChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Head"],CloneChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Torso"],CloneChar["Torso"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Left Arm"],CloneChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Right Arm"],CloneChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Left Leg"],CloneChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Right Leg"],CloneChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
 
 	coroutine.wrap(function()
 		while true do
@@ -269,7 +272,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 
 	for _,v in next, DeadChar:GetChildren() do
 		if v:IsA("Accessory") then
-			thewhat(v.Handle,CloneChar[v.Name].Handle,Vector3.new(0,0,0),Vector3.new(0,0,0))
+			align(v.Handle,CloneChar[v.Name].Handle,Vector3.new(0,0,0),Vector3.new(0,0,0))
 		end
 	end
 
@@ -422,17 +425,17 @@ elseif Bypass == "death" then --------------------------------------------------
 		end
 	end)()
 
-	thewhat(DeadChar["Head"],CloneChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Torso"],CloneChar["Torso"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Left Arm"],CloneChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Right Arm"],CloneChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Left Leg"],CloneChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(DeadChar["Right Leg"],CloneChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-   	thewhat(DeadChar["HumanoidRootPart"],CloneChar["HumanoidRootPart"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Head"],CloneChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Torso"],CloneChar["Torso"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Left Arm"],CloneChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Right Arm"],CloneChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Left Leg"],CloneChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(DeadChar["Right Leg"],CloneChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+   	align(DeadChar["HumanoidRootPart"],CloneChar["HumanoidRootPart"],Vector3.new(0,0,0),Vector3.new(0,0,0))
 
 	for _,v in next, DeadChar:GetChildren() do
 		if v:IsA("Accessory") then
-			thewhat(v.Handle,CloneChar[v.Name].Handle,Vector3.new(0,0,0),Vector3.new(0,0,0))
+			align(v.Handle,CloneChar[v.Name].Handle,Vector3.new(0,0,0),Vector3.new(0,0,0))
 		end
 	end
 
@@ -483,13 +486,13 @@ elseif Bypass == "hats" then
 	end
 	con = game:GetService("RunService").Stepped:Connect(UnCollide)
 
-	thewhat(HatName.Handle,DeadChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	thewhat(HatsLimb.Torso1.Handle,DeadChar["Torso"],Vector3.new(0.5,0,0),Vector3.new(90,0,0))
-	thewhat(HatsLimb.Torso2.Handle,DeadChar["Torso"],Vector3.new(-0.5,0,0),Vector3.new(90,0,0))
-	thewhat(HatsLimb.Larm.Handle,DeadChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	thewhat(HatsLimb.Rarm.Handle,DeadChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	thewhat(HatsLimb.Lleg.Handle,DeadChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	thewhat(HatsLimb.Rleg.Handle,DeadChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
+	align(HatName.Handle,DeadChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
+	align(HatsLimb.Torso1.Handle,DeadChar["Torso"],Vector3.new(0.5,0,0),Vector3.new(90,0,0))
+	align(HatsLimb.Torso2.Handle,DeadChar["Torso"],Vector3.new(-0.5,0,0),Vector3.new(90,0,0))
+	align(HatsLimb.Larm.Handle,DeadChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
+	align(HatsLimb.Rarm.Handle,DeadChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
+	align(HatsLimb.Lleg.Handle,DeadChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
+	align(HatsLimb.Rleg.Handle,DeadChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
     
     for i,v in pairs(HatsLimb) do
 		v.Handle:FindFirstChild("AccessoryWeld"):Destroy()
@@ -515,16 +518,17 @@ if _G.NetworkOwnershipBypass > 0 then
 		if v:IsA("BasePart") and v.Name ~="HumanoidRootPart" then
 			BOXNETLESS = game:GetService("RunService").Heartbeat:connect(function()
 				v.Velocity = Vector3.new(val,0,0)
-				if not as:FindFirstChild("HumanoidRootPart") then return end
-				as.HumanoidRootPart.Velocity = Vector3.new(val,0,0)
+				if as:FindFirstChild("HumanoidRootPart") then 
+                    as.HumanoidRootPart.Velocity = Vector3.new(val,0,0)
+                end
 			end)
 		end
 	end
 
 	print("NetworkOwnership bypass successfully set up!")
 end
-if _G.ReanimatePlatform == true then
-	wait(0.5)
+if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
+	wait(0.1)
 	spawn(function()
 		for i = 10, 0, -0.5 do
 			wait()
@@ -533,22 +537,30 @@ if _G.ReanimatePlatform == true then
 		end
 		baseplatium:Destroy()
 	end)
-	workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
+    local goal = {}
+	goal.CFrame = previouscf
+	local tweenInfo = TweenInfo.new(0.5)
+	local tween = TweenService:Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	--workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
 end
 local reanimationend = tick() - reanimationstart
 print("Reanimated! Just took "..reanimationend.." seconds.")
 if _G.Fling == true then
-	local chr = game:GetService("Players").LocalPlayer.Character
-	print("Setting up fling...")
-	workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
-	chr.HumanoidRootPart.Transparency = 0.7
-	chr.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
-	chr.HumanoidRootPart.CanCollide = false
-	local att = Instance.new("Attachment", chr.Torso)
-	att.Name = "Fling Attachment"
-	local angularvelocity = Instance.new("BodyAngularVelocity", chr.HumanoidRootPart)
-	angularvelocity.AngularVelocity = Vector3.new(0,math.huge,0)
-	print("Fling successfully set up!")
+    if _G.PermanentDeath == true then
+ 	    local chr = game:GetService("Players").LocalPlayer.Character
+	    print("Setting up fling...")
+	    workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
+	    chr.HumanoidRootPart.Transparency = 0.7
+	    chr.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+	    chr.HumanoidRootPart.CanCollide = false
+	    local att = Instance.new("Attachment", chr.Torso)
+    	att.Name = "Fling Attachment"
+	    local angularvelocity = Instance.new("BodyAngularVelocity", chr.HumanoidRootPart)
+    	angularvelocity.AngularVelocity = Vector3.new(0,math.huge,0)
+	    print("Fling successfully set up!")
+    else
+        warn("Flinging without PermanentDeath active will result in fatal error. Please disable _G.Fling or enable _G.PermanentDeath")
+    end
 end
 if _G.RejoinButton == true then
 	local Players = game:GetService("Players")
