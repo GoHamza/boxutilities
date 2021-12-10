@@ -87,7 +87,7 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
     local goal = {}
 	goal.CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
 	local tweenInfo = TweenInfo.new(0.5)
-	local tween = TweenService:Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	local tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
 end
 
 if _G.PermanentDeath == true then
@@ -540,7 +540,7 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
     local goal = {}
 	goal.CFrame = previouscf
 	local tweenInfo = TweenInfo.new(0.5)
-	local tween = TweenService:Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	local tween = game:GetService("TweenService"):Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
 	--workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
 end
 local reanimationend = tick() - reanimationstart
