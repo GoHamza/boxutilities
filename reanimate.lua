@@ -521,7 +521,7 @@ if _G.RejoinButton == true then
 	print("Successfully set up rejoin button!")
 end
 if _G.Noclip == true and _G.PermanentDeath == false then
-	local Character = game:GetService("Players").LocalPlayer.Character
+	local Character = workspace.AnimatorCharacter
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
 			if child:IsA("BasePart") and child.CanCollide == true then
@@ -532,7 +532,7 @@ if _G.Noclip == true and _G.PermanentDeath == false then
 	Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
 end
 if _G.PermanentDeath == true then
-local Character = game:GetService("Players").LocalPlayer.Character
+local Character = workspace.AnimatorCharacter
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
 			if child:IsA("BasePart") and child.CanCollide == true then
