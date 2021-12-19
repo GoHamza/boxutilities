@@ -433,14 +433,7 @@ elseif Bypass == "death" then --------------------------------------------------
 		end 
 	end
 	local Character = game:GetService("Players").LocalPlayer.Character
-	local function NoclipLoop()
-		for _, child in pairs(Character:GetDescendants()) do
-			if child:IsA("BasePart") and child.CanCollide == true then
-				child.CanCollide = false
-			end
-		end
-	end
-	Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
+	
 end
 Bypass = nil
 local donesound = Instance.new("Sound", game:GetService("ReplicatedStorage"))
@@ -529,6 +522,17 @@ if _G.RejoinButton == true then
 end
 if _G.Noclip == true and _G.PermanentDeath == false then
 	local Character = game:GetService("Players").LocalPlayer.Character
+	local function NoclipLoop()
+		for _, child in pairs(Character:GetDescendants()) do
+			if child:IsA("BasePart") and child.CanCollide == true then
+				child.CanCollide = false
+			end
+		end
+	end
+	Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
+end
+if _G.PermanentDeath == true then
+local Character = game:GetService("Players").LocalPlayer.Character
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
 			if child:IsA("BasePart") and child.CanCollide == true then
