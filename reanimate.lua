@@ -1,16 +1,31 @@
 -- Loader: Use this to load the reanimation.
+
 --[[
 _G.RejoinButton = true -- Makes the reset button in the menu rejoin you.
 _G.PermanentDeath = true  -- Permanent death for moving the head and using fling.
 _G.Fling = false -- Turns your root part into a block that can send people to the orbit.
 _G.NetworkOwnershipBypass = 50 -- The higher the number, the more your character will jitter but it will be less prone to limbs falling. Set to 0 if you don't want it. Recommended number is 30.
-_G.Noclip = true -- Makes your character unflingable and pass through walls.
+_G.Noclip = true -- Makes your character unflingable and pass through walls. Only for use when _G.PermanentDeath is off.
 _G.ReanimatePlatform = true -- Teleports your character to a platform while reanimating. Prevents people from taking NetworkOwnership of your limbs.
+_G.ReanimatePlatformFastTP = false -- Disabling this will make the reanimation process take longer, and will also prevent teleportation causing limb loss.
 loadstring(game:HttpGet(string.reverse("aul.etaminaer/niam/seitilituxob/azmaHoG/moc.tnetnocresubuhtig.war//:sptth")))()
-]]
+]]--
 
 -- Don't be surprised if it's similar to Mizt's reanimation. It's a fork of it. Completely open-source, I don't care if you skid it or make a fork.
--- If you're converting a script from Mizt's reanimation, replace workspace.non with workspace.AnimatorCharacter and Ali_P or Ali_O are simply AlignPosition and AlignOrientation respectivly.
+-- If you're converting a script from Mizt's reanimation, replace workspace.non with workspace.AnimatorCharacter and Ali_P or Ali_O are simply AlignPosition and AlignOrientation respectively.
+
+-- MORE STUFF (or not):
+
+--[[
+AlignPosition and AlignOrientation can be found in the character's limbs.
+You can see 2 attachments. Ones for position and the other for orientation.
+The character for animating is workspace["AnimatorCharacter"]
+An account has been created called AnimatorCharacter just so that nobody tries to mess around with the reanimation.
+This reanimation can fall apart due to lag. This is just me telling you to get a NASA computer. (jk)
+You may have to check regularly for updates on my Github, "GoHamza" but I will try my best to stop the reanimation from breaking due to missing _G variables.
+If you're going to use this reanimation for public scripts, please put some credits. It's not required but it will make more people use the reanimation.
+]]--
+
 -- This script will be updated when I feel like it. You can message me ideas on my Discord, GoHamza#6766.
 -- Also tell me what happens when an apple becomes a doctor. Does it create a blackhole?
 
@@ -59,10 +74,6 @@ if _G.PermanentDeath == true then
 	print("Reanimating with permanent death...")
 else
 	print("Reanimating without permanent death...")
-	if Fling == true then
-		warn("Cannot use fling without permanent death!")
-		Fling = false
-	end
 end
 local reanimationstart = tick()
 if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
@@ -78,16 +89,21 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	baseplatium.Size = Vector3.new(0,0,0)
 	previouscf = game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
 	coroutine.wrap(function()
-		for i = 0, 10, 0.5 do
-			wait()
-			baseplatium.Size = Vector3.new(i,i/8,i)
-			baseplatium.Orientation = Vector3.new(0,i*18,0)
-		end
+			local goal = {}
+			goal.Size = Vector3.new(10,1,10)
+			goal.Orientation = Vector3.new(0,360,0)
+			local tweenInfo = TweenInfo.new(1)
+			local tween = game:GetService("TweenService"):Create(baseplatium, tweenInfo, goal):Play()
 	end)()
-    local goal = {}
+	local goal = {}
 	goal.CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
-	local tweenInfo = TweenInfo.new(0.5)
-	local tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	if not _G.ReanimatePlatformFastTP then
+		local tweenInfo = TweenInfo.new(1)
+		local tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	else
+		game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
+	end
+	
 end
 
 if _G.PermanentDeath == true then
@@ -95,7 +111,7 @@ if _G.PermanentDeath == true then
 else
 	Bypass = "limbs"
 end
-ded = false
+HumanoidIsDead = false
 if _G.PermanentDeath == true then
 	local startsound = Instance.new("Sound", game:GetService("ReplicatedStorage"))
 	startsound.SoundId = "rbxassetid://4462044869"
@@ -148,7 +164,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	local LVecPart = Instance.new("Part", workspace) LVecPart.CanCollide = false LVecPart.Transparency = 1
 	local CONVEC
 	local function VECTORUNIT()
-	if ded then CONVEC:Disconnect(); return end
+	if HumanoidIsDead then CONVEC:Disconnect(); return end
 	local lookVec = workspace.Camera.CFrame.lookVector
 	local Root = CloneChar["HumanoidRootPart"]
 	LVecPart.Position = Root.Position
@@ -159,7 +175,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	local CONDOWN
 	local WDown, ADown, SDown, DDown, SpaceDown = false, false, false, false, false
 	local function KEYDOWN(_,Processed) 
-	if ded then CONDOWN:Disconnect(); return end
+	if HumanoidIsDead then CONDOWN:Disconnect(); return end
 	if Processed ~= true then
 	local Key = _.KeyCode
 	if Key == Enum.KeyCode.W then
@@ -176,7 +192,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 
 	local CONUP
 	local function KEYUP(_)
-	if ded then CONUP:Disconnect(); return end
+	if HumanoidIsDead then CONUP:Disconnect(); return end
 	local Key = _.KeyCode
 	if Key == Enum.KeyCode.W then
 	WDown = false end
@@ -197,7 +213,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 
 	coroutine.wrap(function() 
 	while true do game:GetService("RunService").RenderStepped:Wait()
-	if ded then break end
+	if HumanoidIsDead then break end
 	if WDown then MoveClone(0,0,1e4) end
 	if ADown then MoveClone(1e4,0,0) end
 	if SDown then MoveClone(0,0,-1e4) end
@@ -208,21 +224,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	end 
 	end)()
 
-	local con
-	function UnCollide()
-		if ded then con:Disconnect(); return end
-		for _,Parts in next, CloneChar:GetDescendants() do
-			if Parts:IsA("BasePart") then
-				Parts.CanCollide = false 
-			end 
-		end
-		for _,Parts in next, DeadChar:GetDescendants() do
-			if Parts:IsA("BasePart") then
-			Parts.CanCollide = false
-			end 
-		end 
-	end
-	con = game:GetService("RunService").Stepped:Connect(UnCollide)
+	
 
 	local resetBindable = Instance.new("BindableEvent")
 	resetBindable.Event:connect(function()
@@ -239,7 +241,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 		while true do
 			game:GetService("RunService").RenderStepped:wait()
 			if not CloneChar or not CloneChar:FindFirstChild("Head") or not CloneChar:FindFirstChild("Humanoid") or CloneChar:FindFirstChild("Humanoid").Health <= 0 or not DeadChar or not DeadChar:FindFirstChild("Head") or not DeadChar:FindFirstChild("Humanoid") or DeadChar:FindFirstChild("Humanoid").Health <= 0 then 
-				ded = true
+				HumanoidIsDead = true
 				pcall(function()
 					game.Players.LocalPlayer.Character = CloneChar
 					CloneChar:Destroy()
@@ -265,7 +267,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	coroutine.wrap(function()
 		while true do
 			game:GetService("RunService").RenderStepped:wait()
-			if ded then break end
+			if HumanoidIsDead then break end
 			DeadChar["Torso"].CFrame = CloneChar["Torso"].CFrame
 		end
 	end)()
@@ -321,7 +323,7 @@ elseif Bypass == "death" then --------------------------------------------------
 	local LVecPart = Instance.new("Part", workspace) LVecPart.CanCollide = false LVecPart.Transparency = 1
 	local CONVEC
 	local function VECTORUNIT()
-	if ded then CONVEC:Disconnect(); return end
+	if HumanoidIsDead then CONVEC:Disconnect(); return end
 	local lookVec = workspace.Camera.CFrame.lookVector
 	local Root = CloneChar["HumanoidRootPart"]
 	LVecPart.Position = Root.Position
@@ -332,7 +334,7 @@ elseif Bypass == "death" then --------------------------------------------------
 	local CONDOWN
 	local WDown, ADown, SDown, DDown, SpaceDown = false, false, false, false, false
 	local function KEYDOWN(_,Processed) 
-	if ded then CONDOWN:Disconnect(); return end
+	if HumanoidIsDead then CONDOWN:Disconnect(); return end
 	if Processed ~= true then
 	local Key = _.KeyCode
 	if Key == Enum.KeyCode.W then
@@ -349,7 +351,7 @@ elseif Bypass == "death" then --------------------------------------------------
 
 	local CONUP
 	local function KEYUP(_)
-	if ded then CONUP:Disconnect(); return end
+	if HumanoidIsDead then CONUP:Disconnect(); return end
 	local Key = _.KeyCode
 	if Key == Enum.KeyCode.W then
 	WDown = false end
@@ -370,7 +372,7 @@ elseif Bypass == "death" then --------------------------------------------------
 
 	coroutine.wrap(function() 
 	while true do game:GetService("RunService").RenderStepped:Wait()
-	if ded then break end
+	if HumanoidIsDead then break end
 	if WDown then MoveClone(0,0,1e4) end
 	if ADown then MoveClone(1e4,0,0) end
 	if SDown then MoveClone(0,0,-1e4) end
@@ -381,21 +383,7 @@ elseif Bypass == "death" then --------------------------------------------------
 	end 
 	end)()
 
-	local con
-	function UnCollide()
-		if ded then con:Disconnect(); return end
-		for _,Parts in next, CloneChar:GetDescendants() do
-			if Parts:IsA("BasePart") then
-				Parts.CanCollide = false 
-			end 
-		end
-		for _,Parts in next, DeadChar:GetDescendants() do
-			if Parts:IsA("BasePart") then
-			Parts.CanCollide = false
-			end 
-		end 
-	end
-	con = game:GetService("RunService").Stepped:Connect(UnCollide)
+	
 
 	local resetBindable = Instance.new("BindableEvent")
 	resetBindable.Event:connect(function()
@@ -409,7 +397,7 @@ elseif Bypass == "death" then --------------------------------------------------
 		while true do
 			game:GetService("RunService").RenderStepped:wait()
 			if not CloneChar or not CloneChar:FindFirstChild("Head") or not CloneChar:FindFirstChild("Humanoid") or CloneChar:FindFirstChild("Humanoid").Health <= 0 then 
-				ded = true
+				HumanoidIsDead = true
 				pcall(function()
 					game.Players.LocalPlayer.Character = CloneChar
 					CloneChar:Destroy()
@@ -440,66 +428,19 @@ elseif Bypass == "death" then --------------------------------------------------
 	end
 
 	for _,BodyParts in next, CloneChar:GetDescendants() do
-	if BodyParts:IsA("BasePart") or BodyParts:IsA("Part") then
-	BodyParts.Transparency = 1 end end
-elseif Bypass == "hats" then
-	game:GetService("Players").LocalPlayer["Character"].Archivable = true 
-	local DeadChar = game.Players.LocalPlayer.Character
-	DeadChar.Name = "AnimatorCharacter"
-	local HatPosition = Vector3.new(0,0,0)
-	local HatName = "MediHood"
-	local HatsLimb = {
-		Rarm = DeadChar:FindFirstChild("Hat1"),
-		Larm = DeadChar:FindFirstChild("Pink Hair"),
-		Rleg = DeadChar:FindFirstChild("Robloxclassicred"),
-		Lleg = DeadChar:FindFirstChild("Kate Hair"),
-		Torso1 = DeadChar:FindFirstChild("Pal Hair"),
-		Torso2 = DeadChar:FindFirstChild("LavanderHair")
-	}
-	HatName = DeadChar:FindFirstChild(HatName)
-
-	coroutine.wrap(function()
-		while true do
-			game:GetService("RunService").RenderStepped:wait()
-			if not DeadChar or not DeadChar:FindFirstChild("Head") or not DeadChar:FindFirstChild("Humanoid") or DeadChar:FindFirstChild("Humanoid").Health <= 0 then 
-				ded = true
-				pcall(function()
-					if resetBindable then
-						game:GetService("StarterGui"):SetCore("ResetButtonCallback", true)
-						resetBindable:Destroy()
-					end
-					DeadChar.Humanoid.Health = 0
-				end)
-				break
-			end		
-		end
-	end)()
-
-	local con
-	function UnCollide()
-		if ded then con:Disconnect(); return end
-		for _,Parts in next, DeadChar:GetDescendants() do
-			if Parts:IsA("BasePart") then
-			Parts.CanCollide = false
-			end 
+		if BodyParts:IsA("BasePart") or BodyParts:IsA("Part") then
+		BodyParts.Transparency = 1 
 		end 
 	end
-	con = game:GetService("RunService").Stepped:Connect(UnCollide)
-
-	align(HatName.Handle,DeadChar["Head"],Vector3.new(0,0,0),Vector3.new(0,0,0))
-	align(HatsLimb.Torso1.Handle,DeadChar["Torso"],Vector3.new(0.5,0,0),Vector3.new(90,0,0))
-	align(HatsLimb.Torso2.Handle,DeadChar["Torso"],Vector3.new(-0.5,0,0),Vector3.new(90,0,0))
-	align(HatsLimb.Larm.Handle,DeadChar["Left Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	align(HatsLimb.Rarm.Handle,DeadChar["Right Arm"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	align(HatsLimb.Lleg.Handle,DeadChar["Left Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-	align(HatsLimb.Rleg.Handle,DeadChar["Right Leg"],Vector3.new(0,0,0),Vector3.new(90,0,0))
-    
-    for i,v in pairs(HatsLimb) do
-		v.Handle:FindFirstChild("AccessoryWeld"):Destroy()
-		if v.Handle:FindFirstChild("Mesh") then v.Handle:FindFirstChild("Mesh"):Destroy() end
-		if v.Handle:FindFirstChild("SpecialMesh") then v.Handle:FindFirstChild("SpecialMesh"):Destroy() end
+	local Character = game:GetService("Players").LocalPlayer.Character
+	local function NoclipLoop()
+		for _, child in pairs(Character:GetDescendants()) do
+			if child:IsA("BasePart") and child.CanCollide == true then
+				child.CanCollide = false
+			end
+		end
 	end
-	HatName.Handle:FindFirstChild("AccessoryWeld"):Destroy()
+	Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
 end
 Bypass = nil
 local donesound = Instance.new("Sound", game:GetService("ReplicatedStorage"))
@@ -519,8 +460,8 @@ if _G.NetworkOwnershipBypass > 0 then
 			BOXNETLESS = game:GetService("RunService").Heartbeat:connect(function()
 				v.Velocity = Vector3.new(val,0,0)
 				if as:FindFirstChild("HumanoidRootPart") then 
-                    as.HumanoidRootPart.Velocity = Vector3.new(val,0,0)
-                end
+					as.HumanoidRootPart.Velocity = Vector3.new(val,0,0)
+				end
 			end)
 		end
 	end
@@ -530,37 +471,41 @@ end
 if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	wait(0.1)
 	spawn(function()
-		for i = 10, 0, -0.5 do
-			wait()
-			baseplatium.Size = Vector3.new(i,i/8,i)
-			baseplatium.Orientation = Vector3.new(0,i*9,0)
-		end
+		local goal = {}
+		goal.Size = Vector3.new(0,0,0)
+		goal.Orientation = Vector3.new(0,0,0)
+		local tweenInfo = TweenInfo.new(1)
+		local tween = game:GetService("TweenService"):Create(baseplatium, tweenInfo, goal):Play()
+		wait(1.2)
 		baseplatium:Destroy()
 	end)
-    local goal = {}
+	local goal = {}
 	goal.CFrame = previouscf
-	local tweenInfo = TweenInfo.new(1.2)
-	local tween = game:GetService("TweenService"):Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
-	--workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
+	if not _G.ReanimatePlatformFastTP then
+		local tweenInfo = TweenInfo.new(1.8)
+		local tween = game:GetService("TweenService"):Create(workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
+	else
+		workspace.AnimatorCharacter:FindFirstChild("HumanoidRootPart").CFrame = previouscf
+	end
 end
 local reanimationend = tick() - reanimationstart
 print("Reanimated! Just took "..reanimationend.." seconds.")
 if _G.Fling == true then
-    if _G.PermanentDeath == true then
- 	    local chr = game:GetService("Players").LocalPlayer.Character
-	    print("Setting up fling...")
-	    workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
-	    chr.HumanoidRootPart.Transparency = 0.7
-	    chr.HumanoidRootPart.BrickColor = BrickColor.new("Bright green")
-	    chr.HumanoidRootPart.CanCollide = false
-	    local att = Instance.new("Attachment", chr.Torso)
-    	att.Name = "Fling Attachment"
-	    local angularvelocity = Instance.new("BodyAngularVelocity", chr.HumanoidRootPart)
-    	angularvelocity.AngularVelocity = Vector3.new(0,math.huge,0)
-	    print("Fling successfully set up!")
-    else
-        warn("Flinging without PermanentDeath active will result in fatal error. Please disable _G.Fling or enable _G.PermanentDeath")
-    end
+	if _G.PermanentDeath == true then
+ 		local chr = game:GetService("Players").LocalPlayer.Character
+		print("Setting up fling...")
+		workspace.AnimatorCharacter.HumanoidRootPart.AlignOrientation:Destroy()
+		chr.HumanoidRootPart.Transparency = 0.7
+		chr.HumanoidRootPart.BrickColor = BrickColor.new("Bright green")
+		chr.HumanoidRootPart.CanCollide = false
+		local att = Instance.new("Attachment", chr.Torso)
+		att.Name = "Fling Attachment"
+		local angularvelocity = Instance.new("BodyAngularVelocity", chr.HumanoidRootPart)
+		angularvelocity.AngularVelocity = Vector3.new(0,math.huge,0)
+		print("Fling successfully set up!")
+	else
+		warn("Flinging without PermanentDeath active is currently not supported. Please disable _G.Fling or enable _G.PermanentDeath")
+	end
 end
 if _G.RejoinButton == true then
 	local Players = game:GetService("Players")
@@ -574,8 +519,6 @@ if _G.RejoinButton == true then
 		game:GetService("CoreGui").RobloxGui.SettingsShield.SettingsShield.MenuContainer.PageViewClipper.PageView.PageViewInnerFrame.ResetCharacter.ResetCharacterText.ResetButtonContainer.ResetCharacterButton.ResetCharacterTextLabel.Text = "Yes"
 		game:GetService("CoreGui").RobloxGui.SettingsShield.SettingsShield.MenuContainer.PageViewClipper.PageView.PageViewInnerFrame.ResetCharacter.ResetCharacterText.ResetButtonContainer.ResetCharacterButton.MouseButton1Down:Connect(function()
 			if #Players:GetPlayers() <= 1 then
-				Players.LocalPlayer:Kick("Server stopped. Sending you to a new server.")
-				wait()
 				game:GetService('TeleportService'):Teleport(game.PlaceId, Players.LocalPlayer)
 			else
 				game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, Players.LocalPlayer)
@@ -584,7 +527,7 @@ if _G.RejoinButton == true then
 	end)()
 	print("Successfully set up rejoin button!")
 end
-if _G.Noclip == true then
+if _G.Noclip == true and _G.PermanentDeath == false then
 	local Character = game:GetService("Players").LocalPlayer.Character
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
