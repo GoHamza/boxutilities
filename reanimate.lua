@@ -148,7 +148,7 @@ function align(Part0,Part1,Position,Angle)
 end
 if Bypass == "limbs" then --------------------------------------------------------------------------------------------------------------------
 	game:GetService("Players").LocalPlayer["Character"].Archivable = true 
-	local CloneChar = game:GetService("Players").LocalPlayer["Character"]:Clone()
+	CloneChar = game:GetService("Players").LocalPlayer["Character"]:Clone()
 	CloneChar.Parent = workspace 
 	CloneChar.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer["Character"].HumanoidRootPart.CFrame * CFrame.new(0,2,0)
 	wait() 
@@ -237,6 +237,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 	end)
 	game:GetService("StarterGui"):SetCore("ResetButtonCallback", resetBindable)
 
+	
 	coroutine.wrap(function()
 		while true do
 			game:GetService("RunService").RenderStepped:wait()
@@ -289,7 +290,7 @@ if Bypass == "limbs" then ------------------------------------------------------
 
 elseif Bypass == "death" then --------------------------------------------------------------------------------------------------------------------
 	game:GetService("Players").LocalPlayer["Character"].Archivable = true 
-	local CloneChar = game:GetService("Players").LocalPlayer["Character"]:Clone()
+	CloneChar = game:GetService("Players").LocalPlayer["Character"]:Clone()
 	game:GetService("Players").LocalPlayer["Character"].Humanoid.WalkSpeed = 0 
 	game:GetService("Players").LocalPlayer["Character"].Humanoid.JumpPower = 0 
 	game:GetService("Players").LocalPlayer["Character"].Humanoid.AutoRotate = false
@@ -393,6 +394,22 @@ elseif Bypass == "death" then --------------------------------------------------
 	end)
 	game:GetService("StarterGui"):SetCore("ResetButtonCallback", resetBindable)
 
+	local con
+	function UnCollide()
+		if ded then con:Disconnect(); return end
+		for _,Parts in next, CloneChar:GetDescendants() do
+			if Parts:IsA("BasePart") then
+				Parts.CanCollide = false 
+			end 
+		end
+		for _,Parts in next, DeadChar:GetDescendants() do
+			if Parts:IsA("BasePart") then
+			Parts.CanCollide = false
+			end 
+		end 
+	end
+	con = game:GetService("RunService").Stepped:Connect(UnCollide)
+	
 	coroutine.wrap(function()
 		while true do
 			game:GetService("RunService").RenderStepped:wait()
@@ -522,17 +539,6 @@ if _G.RejoinButton == true then
 end
 if _G.Noclip == true and _G.PermanentDeath == false then
 	local Character = workspace.AnimatorCharacter
-	local function NoclipLoop()
-		for _, child in pairs(Character:GetDescendants()) do
-			if child:IsA("BasePart") and child.CanCollide == true then
-				child.CanCollide = false
-			end
-		end
-	end
-	Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
-end
-if _G.PermanentDeath == true then
-local Character = workspace.AnimatorCharacter
 	local function NoclipLoop()
 		for _, child in pairs(Character:GetDescendants()) do
 			if child:IsA("BasePart") and child.CanCollide == true then
