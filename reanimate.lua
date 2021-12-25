@@ -123,26 +123,28 @@ end
 function align(Part0,Part1,Position,Angle)
 	local AlignPos = Instance.new('AlignPosition', Part1);
 	AlignPos.ApplyAtCenterOfMass = true;
-	AlignPos.MaxForce = 10000000000;
+	AlignPos.MaxForce = 1000000000;
 	AlignPos.MaxVelocity = math.huge/9e110;
 	AlignPos.ReactionForceEnabled = false;
-	AlignPos.Responsiveness = 100;
+	AlignPos.Responsiveness = 200;
 	AlignPos.RigidityEnabled = false;
 	local AlignOri = Instance.new('AlignOrientation', Part1);
 	AlignOri.MaxAngularVelocity = math.huge/9e110;
-	AlignOri.MaxTorque = 10000000000;
+	AlignOri.MaxTorque = 1000000000;
 	AlignOri.PrimaryAxisOnly = false;
 	AlignOri.ReactionTorqueEnabled = false;
-	AlignOri.Responsiveness = 100;
+	AlignOri.Responsiveness = 200;
 	AlignOri.RigidityEnabled = false;
 	local AttachmentA=Instance.new('Attachment',Part1);
 	local AttachmentB=Instance.new('Attachment',Part0);
-	AttachmentA.Orientation = Angle
+	local AttachmentC=Instance.new('Attachment',Part1);
+	local AttachmentD=Instance.new('Attachment',Part0);
+	AttachmentC.Orientation = Angle
 	AttachmentA.Position = Position
 	AlignPos.Attachment1 = AttachmentA;
 	AlignPos.Attachment0 = AttachmentB;
-	AlignOri.Attachment1 = AttachmentA;
-	AlignOri.Attachment0 = AttachmentB;
+	AlignOri.Attachment1 = AttachmentC;
+	AlignOri.Attachment0 = AttachmentD;
 end
 if Bypass == "limbs" then --------------------------------------------------------------------------------------------------------------------
 	game:GetService("Players").LocalPlayer["Character"].Archivable = true 
