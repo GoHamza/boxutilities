@@ -1,0 +1,26 @@
+-- fuck xen, and yth0z
+-- this script above the loadstring just makes nexo think you're whitelisted and will work
+
+local meta, oldm = getrawmetatable(game), {}
+
+setreadonly(meta, false)
+
+for i, v in next, meta do
+	oldm[i] = v
+end
+	
+local fakeF = function()
+	return true
+end
+local fakeR = function()
+	return 255
+end
+
+meta.__index = function(t, k)
+	if k == 'GetRankInGroup' and t == game.Players.LocalPlayer then return fakeR end
+	if k == 'IsInGroup' and t == game.Players.LocalPlayer then return fakeF end
+	if k == 'Kick' or k == 'kick' and t == game.Players.LocalPlayer then return nil end
+	return oldm.__index(t, k)
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GoHamza/boxutilities/main/nexov3.lua",true))()
