@@ -20,9 +20,8 @@ loadstring(game:HttpGet(string.reverse("aul.etaminaer/niam/seitilituxob/azmaHoG/
 AlignPosition and AlignOrientation can be found in the character's limbs.
 You can see 2 attachments. Ones for position and the other for orientation.
 The character for animating is workspace["AnimatorCharacter"]
-An account has been created called AnimatorCharacter just so that nobody tries to mess around with the reanimation.
 This reanimation can fall apart due to lag. This is just me telling you to get a NASA computer. (jk)
-You may have to check regularly for updates on my Github, "GoHamza" but I will try my best to stop the reanimation from breaking due to missing _G variables.
+You may have to check regularly for updates on my Github, "GoHamza", because I might put new settings.
 If you're going to use this reanimation for public scripts, please put some credits. It's not required but it will make more people use the reanimation.
 ]]--
 
@@ -63,8 +62,8 @@ TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
 local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 UIAspectRatioConstraint.Parent = thebox
 coroutine.wrap(function()
-thebox:TweenPosition(UDim2.new(0.006, 0, 0.932, 0),"Out","Sine",1.5)
-wait(1.6)
+thebox:TweenPosition(UDim2.new(0.006, 0, 0.932, 0),"Out","Sine",0.9)
+wait(1)
 TextLabel:TweenPosition(UDim2.new(-0.002, 0, 0, 0),"Out","Sine",0.5)
 end)()
 
@@ -80,7 +79,7 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	print("Created platform.")
 	baseplatium = Instance.new("Part", workspace)
 	baseplatium.Name = "FO10 is a skid"
-	baseplatium.Position = Vector3.new(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.X,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Y + 300,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Z)
+	baseplatium.Position = Vector3.new(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.X,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Y + 500,game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position.Z)
 	baseplatium.CanCollide = true
 	baseplatium.Anchored = true
 	baseplatium.Transparency = 0.5
@@ -98,7 +97,7 @@ if _G.ReanimatePlatform == true and _G.PermanentDeath == true then
 	local goal = {}
 	goal.CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
 	if not _G.ReanimatePlatformFastTP then
-		local tweenInfo = TweenInfo.new(1)
+		local tweenInfo = TweenInfo.new(2)
 		local tween = game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), tweenInfo, goal):Play()
 	else
 		game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = baseplatium.CFrame + Vector3.new(0,20,0)
