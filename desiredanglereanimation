@@ -1,0 +1,24 @@
+local plr = game:GetService("Players").LocalPlayer
+local oricf = plr.Character.HumanoidRootPart.CFrame
+local done = false
+
+plr.Character:BreakJoints()
+
+delanims = workspace.DescendantAdded:Connect(function(inst)
+    if inst:IsA("LocalScript") and inst.Parent == plr.Character then
+        inst.Disabled = true
+        
+        wait(plr.Character.Parent == workspace)
+        
+        inst:Destroy()
+        plr.Character.HumanoidRootPart.CFrame = oricf
+        
+		delanims:Disconnect()
+		done = true
+    end
+end)
+
+repeat task.wait() until done
+delanims = nil
+
+print("Done!")
